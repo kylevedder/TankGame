@@ -6,6 +6,7 @@
 
 package kylevedder.com.github.main;
 
+import kylevedder.com.github.utils.CenteredRectangle;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;

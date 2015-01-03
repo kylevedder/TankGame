@@ -5,6 +5,7 @@
  */
 package kylevedder.com.github.main;
 
+import kylevedder.com.github.utils.CenteredRectangle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.Image;

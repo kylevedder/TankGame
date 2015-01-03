@@ -5,6 +5,7 @@
  */
 package kylevedder.com.github.main;
 
+import kylevedder.com.github.utils.CenteredRectangle;
 import kylevedder.com.github.utils.Utils;
 import java.util.Random;
 import kylevedder.com.github.animation.CustomAnimation;

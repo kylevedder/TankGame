@@ -6,6 +6,7 @@
 
 package kylevedder.com.github.main;
 
+import kylevedder.com.github.utils.CenteredRectangle;
 import org.newdawn.slick.Image;
 
 /**
