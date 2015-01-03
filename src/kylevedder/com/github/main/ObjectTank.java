@@ -7,6 +7,7 @@ package kylevedder.com.github.main;
 
 import kylevedder.com.github.utils.Utils;
 import java.util.Random;
+import kylevedder.com.github.animation.CustomAnimation;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
@@ -24,8 +25,7 @@ public class ObjectTank extends ObjectBoilerplate
     private float speed = 0f;
     private float angle = 0f;
 
-    private Animation forward = null;
-    private Animation backward = null;
+    private CustomAnimation drive = null;
 
     private final float SCALE = 2;
     private final int TILE_WIDTH = 25;
@@ -45,13 +45,9 @@ public class ObjectTank extends ObjectBoilerplate
         SpriteSheet sheet = null;
         try
         {
-            sheet = new SpriteSheet(new Image("images/tank.png"), TILE_WIDTH, TILE_HEIGHT);
-            SpriteSheet sheetBack = new SpriteSheet(sheet.getSubImage(0, 0, TILE_WIDTH * 10, TILE_HEIGHT), TILE_WIDTH, TILE_HEIGHT);
+            sheet = new SpriteSheet(new Image("images/tank.png"), TILE_WIDTH, TILE_HEIGHT);            
             SpriteSheet sheetForward = new SpriteSheet(sheet.getSubImage(0, 0, TILE_WIDTH * 10, TILE_HEIGHT).getFlippedCopy(true, false), TILE_WIDTH, TILE_HEIGHT);
-            backward = new Animation(sheetBack, 100);
-            backward.setAutoUpdate(false);
-            forward = new Animation(sheetForward, 100);
-            forward.setAutoUpdate(false);
+            drive = new CustomAnimation(sheetForward, 100);
         }
         catch (SlickException ex)
         {
@@ -63,33 +59,20 @@ public class ObjectTank extends ObjectBoilerplate
     @Override
     void update(long delta)
     {
-        this.update(delta, this.speed, 0);
-    }
-
-    /**
-     * Updates the drive speed and angleAppend
-     *
-     * @param delta
-     * @param speed
-     * @param angleAppend
-     */
-    public void update(long delta, float speed, float angleAppend)
-    {
-        this.speed = speed;
-        this.angle = wrapAngle(angle, angleAppend);
-        forward.update(delta);
-        backward.update(delta);
-        this.rect.setCenterX(this.rect.getCenterX() + driveForwardX(speed, angle));
-        this.rect.setCenterY(this.rect.getCenterY() + driveForwardY(speed, angle));
+        this.update(delta, null);
     }
 
     public void update(long delta, Input input)
     {
         updateDrive(input);
-
-        forward.update(delta);
-        backward.update(delta);
-
+        if (speed == 0)
+        {
+            drive.freeze(delta);
+        }
+        else
+        {
+            drive.update(delta);
+        }
         this.rect.setCenterX(this.rect.getCenterX() + driveForwardX(speed, angle));
         this.rect.setCenterY(this.rect.getCenterY() + driveForwardY(speed, angle));
     }
@@ -97,7 +80,8 @@ public class ObjectTank extends ObjectBoilerplate
     @Override
     void render(float renderOffsetX, float renderOffsetY)
     {
-        Image image = getProperImage();
+        //gets the correct frame, reverses playback accordingly
+        Image image = drive.getFrame(this.speed < 0);
         image.setCenterOfRotation((((float) image.getWidth()) * SCALE / 2), (((float) image.getHeight()) * SCALE / 2));
         image.setRotation(angle);
         image.draw(this.rect.getCornerX() - renderOffsetX, this.rect.getCornerY() - renderOffsetY, SCALE);
@@ -118,47 +102,7 @@ public class ObjectTank extends ObjectBoilerplate
 //        }
 //</editor-fold>
 
-    }
-
-    Image prevImg = null;
-    int currentFrameCounter = 0;
-
-    private Image getProperImage()
-    {
-
-        if (this.speed < 0)
-        {
-
-            currentFrameCounter = Utils.wrap(currentFrameCounter - 1, 0, forward.getFrameCount() - 1);            
-        }
-        else if (this.speed > 0)
-        {
-            currentFrameCounter = currentFrameCounter = Utils.wrap(currentFrameCounter + 1, 0, forward.getFrameCount() - 1);            
-        }
-        System.out.println("current frame: " + currentFrameCounter);
-        return forward.getImage(currentFrameCounter);
-    }
-
-    Image prevAnim = null;
-
-    private Image getProperImage2()
-    {
-        if (this.speed < 0)
-        {
-
-            return (prevAnim = forward.getImage(forward.getFrameCount() - forward.getFrame() - 1));
-        }
-        else if (this.speed > 0)
-        {
-            return (prevAnim = forward.getImage(forward.getFrame()));
-
-        }
-        else
-        {
-            return (prevAnim = (prevAnim == null) ? forward.getImage(0) : prevAnim);
-        }
-    }
-
+    }     
     /**
      * Takes input from the user and
      *
@@ -166,37 +110,40 @@ public class ObjectTank extends ObjectBoilerplate
      */
     private void updateDrive(Input input)
     {
-        float tankAngleAppend = 0;
-        float tankSpeed = 0;
-        //drive forward
-        if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W))
+        if (input != null)
         {
-            tankSpeed += this.getDriveSpeed();
-        }
-        //drive forward
-        if (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S))
-        {
-            tankSpeed -= this.getDriveSpeed();
-        }
-        //turn left
-        if (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A))
-        {
-            tankAngleAppend -= this.getTurnRate();
-        }
-        //turn right
-        if (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D))
-        {
-            tankAngleAppend += this.getTurnRate();
-        }
+            float tankAngleAppend = 0;
+            float tankSpeed = 0;
+            //drive forward
+            if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W))
+            {
+                tankSpeed += this.getDriveSpeed();
+            }
+            //drive forward
+            if (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S))
+            {
+                tankSpeed -= this.getDriveSpeed();
+            }
+            //turn left
+            if (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A))
+            {
+                tankAngleAppend -= this.getTurnRate();
+            }
+            //turn right
+            if (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D))
+            {
+                tankAngleAppend += this.getTurnRate();
+            }
 
-        //speed multiplier
-        if (input.isKeyDown(Input.KEY_LSHIFT))
-        {
-            tankSpeed *= this.getDriveSpeedMultiplier();
-        }
+            //speed multiplier
+            if (input.isKeyDown(Input.KEY_LSHIFT))
+            {
+                tankSpeed *= this.getDriveSpeedMultiplier();
+            }
 
-        this.speed = tankSpeed;
-        this.angle = wrapAngle(angle, tankAngleAppend);
+            this.speed = tankSpeed;
+            this.angle = wrapAngle(angle, tankAngleAppend);
+        }
     }
 
     /**
