@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package sidescrollerslick;
+package kylevedder.com.github.main;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SpriteSheet;

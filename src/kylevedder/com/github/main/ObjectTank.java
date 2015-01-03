@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sidescrollerslick;
+package kylevedder.com.github.main;
 
+import kylevedder.com.github.utils.Utils;
 import java.util.Random;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -22,8 +23,7 @@ public class ObjectTank extends ObjectBoilerplate
 
     private float speed = 0f;
     private float angle = 0f;
-    
-    
+
     private Animation forward = null;
     private Animation backward = null;
 
@@ -59,36 +59,37 @@ public class ObjectTank extends ObjectBoilerplate
         }
 
     }
-    
 
     @Override
     void update(long delta)
     {
         this.update(delta, this.speed, 0);
     }
-    
+
     /**
      * Updates the drive speed and angleAppend
+     *
      * @param delta
      * @param speed
-     * @param angleAppend 
+     * @param angleAppend
      */
     public void update(long delta, float speed, float angleAppend)
     {
         this.speed = speed;
         this.angle = wrapAngle(angle, angleAppend);
         forward.update(delta);
-        backward.update(delta);        
+        backward.update(delta);
         this.rect.setCenterX(this.rect.getCenterX() + driveForwardX(speed, angle));
         this.rect.setCenterY(this.rect.getCenterY() + driveForwardY(speed, angle));
     }
-    
-    
+
     public void update(long delta, Input input)
     {
-        updateDrive(input);        
+        updateDrive(input);
+
         forward.update(delta);
-        backward.update(delta);        
+        backward.update(delta);
+
         this.rect.setCenterX(this.rect.getCenterX() + driveForwardX(speed, angle));
         this.rect.setCenterY(this.rect.getCenterY() + driveForwardY(speed, angle));
     }
@@ -96,7 +97,7 @@ public class ObjectTank extends ObjectBoilerplate
     @Override
     void render(float renderOffsetX, float renderOffsetY)
     {
-        Image image = getProperAnimation().getImage(forward.getFrame());
+        Image image = getProperImage();
         image.setCenterOfRotation((((float) image.getWidth()) * SCALE / 2), (((float) image.getHeight()) * SCALE / 2));
         image.setRotation(angle);
         image.draw(this.rect.getCornerX() - renderOffsetX, this.rect.getCornerY() - renderOffsetY, SCALE);
@@ -118,8 +119,46 @@ public class ObjectTank extends ObjectBoilerplate
 //</editor-fold>
 
     }
-    
-    
+
+    Image prevImg = null;
+    int currentFrameCounter = 0;
+
+    private Image getProperImage()
+    {
+
+        if (this.speed < 0)
+        {
+
+            currentFrameCounter = Utils.wrap(currentFrameCounter - 1, 0, forward.getFrameCount() - 1);            
+        }
+        else if (this.speed > 0)
+        {
+            currentFrameCounter = currentFrameCounter = Utils.wrap(currentFrameCounter + 1, 0, forward.getFrameCount() - 1);            
+        }
+        System.out.println("current frame: " + currentFrameCounter);
+        return forward.getImage(currentFrameCounter);
+    }
+
+    Image prevAnim = null;
+
+    private Image getProperImage2()
+    {
+        if (this.speed < 0)
+        {
+
+            return (prevAnim = forward.getImage(forward.getFrameCount() - forward.getFrame() - 1));
+        }
+        else if (this.speed > 0)
+        {
+            return (prevAnim = forward.getImage(forward.getFrame()));
+
+        }
+        else
+        {
+            return (prevAnim = (prevAnim == null) ? forward.getImage(0) : prevAnim);
+        }
+    }
+
     /**
      * Takes input from the user and
      *
@@ -128,7 +167,7 @@ public class ObjectTank extends ObjectBoilerplate
     private void updateDrive(Input input)
     {
         float tankAngleAppend = 0;
-        float tankSpeed = 0;        
+        float tankSpeed = 0;
         //drive forward
         if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W))
         {
@@ -149,34 +188,15 @@ public class ObjectTank extends ObjectBoilerplate
         {
             tankAngleAppend += this.getTurnRate();
         }
-        
+
         //speed multiplier
-        if(input.isKeyDown(Input.KEY_LSHIFT))
+        if (input.isKeyDown(Input.KEY_LSHIFT))
         {
             tankSpeed *= this.getDriveSpeedMultiplier();
         }
-        
+
         this.speed = tankSpeed;
         this.angle = wrapAngle(angle, tankAngleAppend);
-    }
-    
-    Animation prevAnim = null;
-    private Animation getProperAnimation()
-    {
-        if(this.speed < 0)
-        {
-            
-            return (prevAnim = backward);
-        }
-        else if (this.speed > 0)
-        {
-            return (prevAnim = forward);
-                    
-        }
-        else 
-        {
-            return (prevAnim = (prevAnim == null)? forward : prevAnim);
-        }           
     }
 
     /**
@@ -231,17 +251,15 @@ public class ObjectTank extends ObjectBoilerplate
     {
         return TURN_RATE;
     }
-    
+
     public float getDriveSpeed()
     {
         return DRIVE_SPEED;
     }
-    
+
     public float getDriveSpeedMultiplier()
     {
         return DRIVE_SPEED_MULTIPLIER;
     }
-    
-    
 
 }

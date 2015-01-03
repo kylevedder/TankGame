@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sidescrollerslick;
+package kylevedder.com.github.main;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,18 +19,18 @@ import org.newdawn.slick.geom.Rectangle;
 public class ObjectGround extends ObjectBoilerplate
 {
 
-    private float scale = 2;
+    private float scale = 8;
 
     private float width = 0;
     private float height = 0;
-    private final int TILE_SIZE = 32;
+    private final int TILE_SIZE = 8;
 
     public ObjectGround(int x, int y)
     {
         this.image = null;
         try
         {
-            this.image = new Image("images/NewGround.png");
+            this.image = new Image("images/Ground.png");
             width = this.image.getWidth();
             height = this.image.getHeight();
         }
