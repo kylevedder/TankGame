@@ -6,14 +6,12 @@
 package sidescrollerslick;
 
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.geom.Rectangle;
 
 /**
  *
@@ -84,6 +82,16 @@ public class ObjectTank extends ObjectBoilerplate
         this.rect.setCenterX(this.rect.getCenterX() + driveForwardX(speed, angle));
         this.rect.setCenterY(this.rect.getCenterY() + driveForwardY(speed, angle));
     }
+    
+    
+    public void update(long delta, Input input)
+    {
+        updateDrive(input);        
+        forward.update(delta);
+        backward.update(delta);        
+        this.rect.setCenterX(this.rect.getCenterX() + driveForwardX(speed, angle));
+        this.rect.setCenterY(this.rect.getCenterY() + driveForwardY(speed, angle));
+    }
 
     @Override
     void render(float renderOffsetX, float renderOffsetY)
@@ -109,6 +117,47 @@ public class ObjectTank extends ObjectBoilerplate
 //        }
 //</editor-fold>
 
+    }
+    
+    
+    /**
+     * Takes input from the user and
+     *
+     * @param gc
+     */
+    private void updateDrive(Input input)
+    {
+        float tankAngleAppend = 0;
+        float tankSpeed = 0;        
+        //drive forward
+        if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W))
+        {
+            tankSpeed += this.getDriveSpeed();
+        }
+        //drive forward
+        if (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S))
+        {
+            tankSpeed -= this.getDriveSpeed();
+        }
+        //turn left
+        if (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A))
+        {
+            tankAngleAppend -= this.getTurnRate();
+        }
+        //turn right
+        if (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D))
+        {
+            tankAngleAppend += this.getTurnRate();
+        }
+        
+        //speed multiplier
+        if(input.isKeyDown(Input.KEY_LSHIFT))
+        {
+            tankSpeed *= this.getDriveSpeedMultiplier();
+        }
+        
+        this.speed = tankSpeed;
+        this.angle = wrapAngle(angle, tankAngleAppend);
     }
     
     Animation prevAnim = null;

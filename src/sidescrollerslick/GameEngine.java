@@ -68,8 +68,7 @@ public class GameEngine
      */
     public void update(GameContainer gc, int deltaTime) throws SlickException
     {
-        takeInput(gc);
-        tank.update(deltaTime, tankSpeed, tankAngleAppend);
+        tank.update(deltaTime, gc.getInput());
         renderOffsetX = tank.getPosX() - (MainApp.SCREEN_WIDTH / 2);
         renderOffsetY = tank.getPosY() - (MainApp.SCREEN_HEIGHT / 2);
     }
@@ -91,12 +90,15 @@ public class GameEngine
         //draws every object
         ObjectBoilerplate object;
 
+        ObjectGround grnd;
         for (int x = 0; x < WORLD_WIDTH; x++)
         {
             for (int y = 0; y < WORLD_HEIGHT; y++)
             {
-                ObjectGround grnd = tileArray[x][y];
-                grnd.render(renderOffsetX, renderOffsetY);
+                if ((grnd = tileArray[x][y]) != null)
+                {
+                    grnd.render(renderOffsetX, renderOffsetY);
+                }
             }
         }
         tank.render(renderOffsetX, renderOffsetY);
@@ -111,44 +113,6 @@ public class GameEngine
             {
                 tileArray[x][y] = new ObjectGround(x, y);
             }
-        }
-    }
-
-    /**
-     * Takes input from the user and
-     *
-     * @param gc
-     */
-    private void takeInput(GameContainer gc)
-    {
-        tankAngleAppend = 0;
-        tankSpeed = 0;
-        Input input = gc.getInput();
-        //drive forward
-        if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W))
-        {
-            tankSpeed += tank.getDriveSpeed();
-        }
-        //drive forward
-        if (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S))
-        {
-            tankSpeed -= tank.getDriveSpeed();
-        }
-        //turn left
-        if (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A))
-        {
-            tankAngleAppend -= tank.getTurnRate();
-        }
-        //turn right
-        if (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D))
-        {
-            tankAngleAppend += tank.getTurnRate();
-        }
-        
-        //speed multiplier
-        if(input.isKeyDown(Input.KEY_LSHIFT))
-        {
-            tankSpeed *= tank.getDriveSpeedMultiplier();
         }
     }
 }
