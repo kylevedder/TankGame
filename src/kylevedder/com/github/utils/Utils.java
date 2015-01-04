@@ -22,9 +22,26 @@ public class Utils
      * @param high
      * @return 
      */
-    public static int wrap(int val, int low, int high)
+    public static int wrapInt(int val, int low, int high)
     {
         int newVal = val % high;
         return (newVal < 0)? high + newVal : newVal;
+    }
+    
+    /**
+     *     
+     * If val greater than high, wraps val to # above high to low (inclusive)
+     * <p>
+     * If val lower than low, wraps val to # below low to high (inclusive)
+     * </p>
+     * @param val
+     * @param low
+     * @param high
+     * @return 
+     */
+    public static float wrapFloat(float val, float low, float high)
+    {
+        float newVal = val % high;
+        return (newVal < 0f)? high + newVal : newVal;
     }
 }

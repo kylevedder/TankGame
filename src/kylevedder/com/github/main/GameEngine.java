@@ -102,6 +102,7 @@ public class GameEngine
             }
         }
         tank.render(renderOffsetX, renderOffsetY);
+        tank.renderBB(g, renderOffsetX, renderOffsetY);
 
     }
 

@@ -80,7 +80,7 @@ public class CustomAnimation
             this.delta -= (long) (add * this.duration);
             //if reversed, want to subtract add, so multiply by -1
             add *= (reverse) ? -1 : 1;
-            frameCount = Utils.wrap(frameCount + add, 0, images.length - 1);
+            frameCount = Utils.wrapInt(frameCount + add, 0, images.length - 1);
         }
         return images[frameCount];
     }

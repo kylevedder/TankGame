@@ -6,15 +6,16 @@
 package kylevedder.com.github.main;
 
 import kylevedder.com.github.utils.CenteredRectangle;
-import kylevedder.com.github.utils.Utils;
 import java.util.Random;
 import kylevedder.com.github.animation.CustomAnimation;
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.geom.Transform;
 
 /**
  *
@@ -46,7 +47,7 @@ public class ObjectTank extends ObjectBoilerplate
         SpriteSheet sheet = null;
         try
         {
-            sheet = new SpriteSheet(new Image("images/tank.png"), TILE_WIDTH, TILE_HEIGHT);            
+            sheet = new SpriteSheet(new Image("images/tank.png"), TILE_WIDTH, TILE_HEIGHT);
             SpriteSheet sheetForward = new SpriteSheet(sheet.getSubImage(0, 0, TILE_WIDTH * 10, TILE_HEIGHT).getFlippedCopy(true, false), TILE_WIDTH, TILE_HEIGHT);
             drive = new CustomAnimation(sheetForward, 100);
         }
@@ -76,6 +77,7 @@ public class ObjectTank extends ObjectBoilerplate
         }
         this.rect.setCenterX(this.rect.getCenterX() + driveForwardX(speed, angle));
         this.rect.setCenterY(this.rect.getCenterY() + driveForwardY(speed, angle));
+        this.rect.setAngle(angle);
     }
 
     @Override
@@ -85,7 +87,8 @@ public class ObjectTank extends ObjectBoilerplate
         Image image = drive.getFrame(this.speed < 0);
         image.setCenterOfRotation((((float) image.getWidth()) * SCALE / 2), (((float) image.getHeight()) * SCALE / 2));
         image.setRotation(angle);
-        image.draw(this.rect.getCornerX() - renderOffsetX, this.rect.getCornerY() - renderOffsetY, SCALE);
+        image.draw(this.rect.getCenterX() - renderOffsetX, this.rect.getCenterY() - renderOffsetY, SCALE);
+
         //<editor-fold defaultstate="collapsed" desc="Helper Render">
 //        try
 //        {
@@ -102,8 +105,23 @@ public class ObjectTank extends ObjectBoilerplate
 //            Logger.getLogger(ObjectTank.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //</editor-fold>
+    }
 
-    }     
+    public void renderBB(Graphics g, float renderOffsetX, float renderOffsetY)
+    {
+        g.setColor(Color.red);
+        g.drawLine(0, 0, MainApp.SCREEN_WIDTH, MainApp.SCREEN_HEIGHT);
+        g.drawLine(MainApp.SCREEN_WIDTH, 0, 0, MainApp.SCREEN_HEIGHT);
+        Shape s = this.rect.getPolygon();
+        g.draw(s);
+        g.setColor(Color.blue);
+        g.drawOval(s.getMaxX(), s.getMaxY(), 5, 5);
+        g.setColor(Color.black);
+        g.drawOval(this.rect.getCenterX() - renderOffsetX, this.rect.getCenterY() - renderOffsetY, 8, 8);
+        System.out.println((this.rect.getCenterX()) + "" + (this.rect.getCenterY()) + "vs" + s.getMaxX() + "," + s.getMaxY());
+//        g.drawRect(this.rect.getCornerX() - renderOffsetX, this.rect.getCornerY() - renderOffsetY);
+    }
+
     /**
      * Takes input from the user and
      *
