@@ -27,14 +27,15 @@ public class ObjectTank extends ObjectBoilerplate
     private float speed = 0f;
     private float angle = 0f;
 
-    private CustomAnimation drive = null;
+    private CustomAnimation driveAnimation = null;
 
     private final float SCALE = 2;
     private final int TILE_WIDTH = 25;
     private final int TILE_HEIGHT = 30;
+    private final int ANIMATION_DURATION = 100;
     private final float TURN_RATE = 2f;
     private final float DRIVE_SPEED = 1.5f;
-    private final float DRIVE_SPEED_MULTIPLIER = 1.5f;
+    private final float DRIVE_SPEED_MULTIPLIER = 2f;
 
     private Random r = null;
 
@@ -49,7 +50,7 @@ public class ObjectTank extends ObjectBoilerplate
         {
             sheet = new SpriteSheet(new Image("images/tank.png"), TILE_WIDTH, TILE_HEIGHT);
             SpriteSheet sheetForward = new SpriteSheet(sheet.getSubImage(0, 0, TILE_WIDTH * 10, TILE_HEIGHT).getFlippedCopy(true, false), TILE_WIDTH, TILE_HEIGHT);
-            drive = new CustomAnimation(sheetForward, 100);
+            driveAnimation = new CustomAnimation(sheetForward, ANIMATION_DURATION);
         }
         catch (SlickException ex)
         {
@@ -69,11 +70,11 @@ public class ObjectTank extends ObjectBoilerplate
         updateDrive(input);
         if (speed == 0)
         {
-            drive.freeze(delta);
+            driveAnimation.freeze(delta);
         }
         else
         {
-            drive.update(delta);
+            driveAnimation.update(delta);
         }
         this.rect.setCenterX(this.rect.getCenterX() + driveForwardX(speed, angle));
         this.rect.setCenterY(this.rect.getCenterY() + driveForwardY(speed, angle));
@@ -84,42 +85,25 @@ public class ObjectTank extends ObjectBoilerplate
     void render(float renderOffsetX, float renderOffsetY)
     {
         //gets the correct frame, reverses playback accordingly
-        Image image = drive.getFrame(this.speed < 0);
+        Image image = driveAnimation.getFrame(this.speed < 0);
         image.setCenterOfRotation((((float) image.getWidth()) * SCALE / 2), (((float) image.getHeight()) * SCALE / 2));
         image.setRotation(angle);
-        image.draw(this.rect.getCenterX() - renderOffsetX, this.rect.getCenterY() - renderOffsetY, SCALE);
-
-        //<editor-fold defaultstate="collapsed" desc="Helper Render">
-//        try
-//        {
-//            Image i = new SpriteSheet(new Image("images/sprites.png"), TILE_WIDTH, TILE_HEIGHT).getSubImage(0, 0);
-//            i.setCenterOfRotation((((float) image.getWidth()) * SCALE / 2), (((float) image.getHeight()) * SCALE / 2));
-//            i.setRotation(angle);
-//            i.draw(this.rect.getCornerX() - renderOffsetX, this.rect.getCornerY() - renderOffsetY, SCALE);
-//            Image i2 = new SpriteSheet(new Image("images/sprites.png"), TILE_WIDTH, TILE_HEIGHT).getSubImage(1, 0);
-//            i2.draw(this.rect.getCenterX() - renderOffsetX, this.rect.getCenterY() - renderOffsetY, SCALE);
-//
-//        }
-//        catch (SlickException ex)
-//        {
-//            Logger.getLogger(ObjectTank.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//</editor-fold>
+        image.draw(this.rect.getCenterX() - renderOffsetX - (image.getWidth() * SCALE / 2), this.rect.getCenterY() - renderOffsetY - (image.getHeight() * SCALE / 2), SCALE);
     }
 
-    public void renderBB(Graphics g, float renderOffsetX, float renderOffsetY)
+    public void renderBoundingBox(Graphics g, float renderOffsetX, float renderOffsetY)
     {
         g.setColor(Color.red);
+        //draw centering "X"
         g.drawLine(0, 0, MainApp.SCREEN_WIDTH, MainApp.SCREEN_HEIGHT);
         g.drawLine(MainApp.SCREEN_WIDTH, 0, 0, MainApp.SCREEN_HEIGHT);
+        //draw center circle        
+        g.drawOval(this.rect.getCenterX() - renderOffsetX - 16, this.rect.getCenterY() - renderOffsetY - 16, 32, 32);
+
+        g.setColor(Color.green);
+        //draw shape
         Shape s = this.rect.getPolygon();
-        g.draw(s);
-        g.setColor(Color.blue);
-        g.drawOval(s.getMaxX(), s.getMaxY(), 5, 5);
-        g.setColor(Color.black);
-        g.drawOval(this.rect.getCenterX() - renderOffsetX, this.rect.getCenterY() - renderOffsetY, 8, 8);
-        System.out.println((this.rect.getCenterX()) + "" + (this.rect.getCenterY()) + "vs" + s.getMaxX() + "," + s.getMaxY());
-//        g.drawRect(this.rect.getCornerX() - renderOffsetX, this.rect.getCornerY() - renderOffsetY);
+        g.draw(s.transform(Transform.createTranslateTransform(-renderOffsetX, -renderOffsetY)));                       
     }
 
     /**
@@ -133,6 +117,7 @@ public class ObjectTank extends ObjectBoilerplate
         {
             float tankAngleAppend = 0;
             float tankSpeed = 0;
+            int duration = ANIMATION_DURATION;
             //drive forward
             if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W))
             {
@@ -158,8 +143,10 @@ public class ObjectTank extends ObjectBoilerplate
             if (input.isKeyDown(Input.KEY_LSHIFT))
             {
                 tankSpeed *= this.getDriveSpeedMultiplier();
-            }
-
+                duration = (int)((float)ANIMATION_DURATION / (this.getDriveSpeedMultiplier()));
+            }            
+                 
+            this.driveAnimation.setDuration(duration);
             this.speed = tankSpeed;
             this.angle = wrapAngle(angle, tankAngleAppend);
         }

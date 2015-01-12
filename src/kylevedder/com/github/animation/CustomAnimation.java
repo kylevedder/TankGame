@@ -26,7 +26,7 @@ public class CustomAnimation
      * Sets up an animation using a sheet and a duration
      *
      * @param sheet sprite sheet for each image
-     * @param duration duration in miliseconds
+     * @param duration duration in milliseconds
      */
     public CustomAnimation(SpriteSheet sheet, int duration)
     {
@@ -55,6 +55,15 @@ public class CustomAnimation
         this.delta += delta;
         frozen = false;
     }
+    
+    /**
+     * Sets the duration which the animation updates in milliseconds.
+     * @param duration duration in milliseconds
+     */
+    public void setDuration(int duration)
+    {
+        this.duration = duration;
+    }
 
     /**
      * Updates the delta count, not over accruing time.
@@ -75,7 +84,7 @@ public class CustomAnimation
         if (!frozen)
         {
             //get the number of frames jumped
-            int add = (int) this.delta / this.duration;
+            int add = (int) (this.delta / this.duration);
             //subtract the number of frames jumped, leaving any extra time behind
             this.delta -= (long) (add * this.duration);
             //if reversed, want to subtract add, so multiply by -1

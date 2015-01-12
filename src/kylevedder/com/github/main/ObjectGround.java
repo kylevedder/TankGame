@@ -8,6 +8,7 @@ package kylevedder.com.github.main;
 import kylevedder.com.github.utils.CenteredRectangle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import kylevedder.com.github.utils.Utils;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -24,7 +25,6 @@ public class ObjectGround extends ObjectBoilerplate
 
     private float width = 0;
     private float height = 0;
-    private final int TILE_SIZE = 8;
 
     public ObjectGround(int x, int y)
     {
@@ -50,7 +50,19 @@ public class ObjectGround extends ObjectBoilerplate
 
     @Override
     void render(float renderOffsetX, float renderOffsetY)
-    {        
+    {
+//        //if visible
+//        if (
+//                //within screen X
+//                rect.getCornerX() - renderOffsetX + image.getWidth() * scale > 0 && rect.getCornerX() - renderOffsetX < MainApp.SCREEN_WIDTH 
+//                &&
+//                //within screen Y
+//                rect.getCornerY() - renderOffsetY + image.getHeight() * scale > 0 && rect.getCornerY() - renderOffsetY < MainApp.SCREEN_WIDTH
+//                )
+//        {            
+//            
+//        }
+        if(Utils.isVisible(rect, image, scale, renderOffsetX, renderOffsetY))
         image.draw(rect.getCornerX() - renderOffsetX, rect.getCornerY() - rect.getHeight() - renderOffsetY, scale);
     }
 }

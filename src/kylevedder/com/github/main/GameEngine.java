@@ -102,14 +102,14 @@ public class GameEngine
             }
         }
         tank.render(renderOffsetX, renderOffsetY);
-        tank.renderBB(g, renderOffsetX, renderOffsetY);
+        tank.renderBoundingBox(g, renderOffsetX, renderOffsetY);
 
     }
 
     private void genGround()
     {
         for (int x = 0; x < WORLD_WIDTH; x++)
-        {
+        {            
             for (int y = 0; y < WORLD_HEIGHT; y++)
             {
                 tileArray[x][y] = new ObjectGround(x, y);

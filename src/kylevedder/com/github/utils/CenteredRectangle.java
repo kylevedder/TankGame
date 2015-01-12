@@ -69,7 +69,7 @@ public class CenteredRectangle
         
         if (rotationAmount != 0 && (float) Math.abs(rotationAmount) != 360f)
         {
-            System.out.println("Rotating by " + rotationAmount + " degrees...");
+//            System.out.println("Rotating by " + rotationAmount + " degrees...");
             this.angle = Utils.wrapFloat(this.angle + rotationAmount, 0f, 360f);
             poly = (Polygon) poly.transform(Transform.createRotateTransform((float) Math.toRadians(rotationAmount), this.getCenterX(), this.getCenterY()));
         }

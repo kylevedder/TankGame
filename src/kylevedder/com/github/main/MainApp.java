@@ -28,7 +28,7 @@ public class MainApp extends BasicGame
      */
     public static void main(String[] args) throws SlickException
     {       
-        app = initApp("Title");
+        app = initApp("Tank Game");
     }
 
     /**
