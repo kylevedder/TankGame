@@ -76,9 +76,12 @@ public class ObjectTank extends ObjectBoilerplate
         {
             driveAnimation.update(delta);
         }
-        this.rect.setCenterX(this.rect.getCenterX() + driveForwardX(speed, angle));
-        this.rect.setCenterY(this.rect.getCenterY() + driveForwardY(speed, angle));
-        this.rect.setAngle(angle);
+        CenteredRectangle newRect = this.rect;
+        newRect.setCenterX(newRect.getCenterX() + driveForwardX(speed, angle));
+        newRect.setCenterY(newRect.getCenterY() + driveForwardY(speed, angle));
+        newRect.setAngle(angle);
+        if(!MainApp.gameEngine.physics.isColliding(newRect))
+            this.rect = newRect;
     }
 
     @Override

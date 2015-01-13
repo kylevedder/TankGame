@@ -50,7 +50,25 @@ public class Utils
         float newVal = val % high;
         return (newVal < 0f) ? high + newVal : newVal;
     }
-
+    
+    /**
+     *
+     * If val greater than high, sets val to high (inclusive)
+     * <p>
+     * If val lower than low, sets val to low (inclusive)
+     * </p>
+     *
+     * @param val
+     * @param low
+     * @param high
+     * @return
+     */
+    public static int clampInt(int val, int low, int high)
+    {
+        if(val > high)return high;
+        if(val < low)return low;
+        return val;
+    }
     /**
      * Useful utility to check if an item needs to be rendered.
      * @param rect rectangle of the item

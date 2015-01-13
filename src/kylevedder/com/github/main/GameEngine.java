@@ -24,8 +24,8 @@ import org.newdawn.slick.geom.Rectangle;
 public class GameEngine
 {
 
-    static final int WORLD_WIDTH = 100;
-    static final int WORLD_HEIGHT = 100;
+    public final int WORLD_WIDTH = 100;
+    public final int WORLD_HEIGHT = 100;
 
     final float PLAYER_START_X = 500f;
     final float PLAYER_START_Y = 500f;
@@ -38,10 +38,12 @@ public class GameEngine
     private float tankSpeed = 0;
 
     ObjectTank tank = null;
-    public static ObjectGround[][] tileArray = new ObjectGround[WORLD_WIDTH][WORLD_HEIGHT];
+    Physics physics = null;
+    public ObjectGroundBoilerplate[][] tileArray = null;
 
     public GameEngine()
     {
+        tileArray = new ObjectGroundBoilerplate[WORLD_WIDTH][WORLD_HEIGHT];
     }
 
     /**
@@ -56,6 +58,7 @@ public class GameEngine
         genGround();
         System.out.println("Ground gened");
         tank = new ObjectTank(PLAYER_START_X, PLAYER_START_Y, PLAYER_START_ANGLE);
+        physics = new Physics();
 
     }
 
@@ -90,7 +93,7 @@ public class GameEngine
         //draws every object
         ObjectBoilerplate object;
 
-        ObjectGround grnd;
+        ObjectBoilerplate grnd;
         for (int x = 0; x < WORLD_WIDTH; x++)
         {
             for (int y = 0; y < WORLD_HEIGHT; y++)
@@ -109,10 +112,17 @@ public class GameEngine
     private void genGround()
     {
         for (int x = 0; x < WORLD_WIDTH; x++)
-        {            
+        {
             for (int y = 0; y < WORLD_HEIGHT; y++)
             {
-                tileArray[x][y] = new ObjectGround(x, y);
+                if (x == 0 || x == WORLD_WIDTH - 1 || y == 0 || y == WORLD_HEIGHT - 1)
+                {
+
+                }
+                else
+                {
+                    tileArray[x][y] = new ObjectGroundDefault(x, y);
+                }
             }
         }
     }

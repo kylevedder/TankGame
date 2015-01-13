@@ -21,8 +21,8 @@ public class MainApp extends BasicGame
     public static final int SCREEN_HEIGHT = 600;
     
     public static final boolean DEBUG = true;
-    static AppGameContainer app;
-    static GameEngine gameEngine;
+    public static AppGameContainer app;
+    public static GameEngine gameEngine;
     /**
      * @param args the command line arguments
      */

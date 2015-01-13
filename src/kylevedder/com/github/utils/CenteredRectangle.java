@@ -25,6 +25,19 @@ public class CenteredRectangle
     private float width = 0;
     private float height = 0;
 
+//    public CenteredRectangle(CenteredRectangle c)
+//    {
+//        this.r = new Rectangle(c.getCornerX(), c.getCornerY(), c.getWidth(), c.getHeight());
+//        poly = new Polygon(new float[]
+//        {
+//            c.getCenterX() - (width / 2), c.getCenterY() - (height / 2),
+//            c.getCenterX() + (width / 2), c.getCenterY() - (height / 2),
+//            c.getCenterX() + (width / 2), c.getCenterY() + (height / 2),
+//            c.getCenterX() - (width / 2), c.getCenterY() + (height / 2)
+//        });
+//        this.setAngle(c.angle);
+//    }
+    
     public CenteredRectangle(float posX, float posY, float size)
     {
         angle = 0;
