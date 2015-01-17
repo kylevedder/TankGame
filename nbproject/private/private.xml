@@ -3,18 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/Physics.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/ObjectEntityBoilerplate.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/ObjectGroundBarrier.java</file>
             <file>file:/D:/Documents/NetBeansProjects/TankGame/lib/slick/src/org/newdawn/slick/Animation.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/animation/CustomAnimation.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/ObjectTank.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/GameEngine.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/Physics.java</file>
             <file>file:/D:/Documents/NetBeansProjects/TankGame/lib/slick/src/org/newdawn/slick/Graphics.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/utils/CenteredRectangle.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/ObjectBoilerplate.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/ObjectGroundDefault.java</file>
             <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/MainApp.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/ObjectGround.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/ObjectEnemy.java</file>
             <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/utils/Utils.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/animation/CustomAnimation.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/GameEngine.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/ObjectTank.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/utils/CenteredRectangle.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/ObjectGroundBoilerplate.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/ObjectBoilerplate.java</file>
         </group>
     </open-files>
 </project-private>

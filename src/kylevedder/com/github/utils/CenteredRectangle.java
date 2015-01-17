@@ -67,6 +67,11 @@ public class CenteredRectangle
         });
     }
 
+    public float getAngle()
+    {
+        return angle;
+    }    
+    
     private float getAngledX(float dist, float angle)
     {
         return (float) Math.sin(Math.toRadians(angle)) * dist;

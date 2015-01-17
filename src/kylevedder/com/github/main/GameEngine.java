@@ -26,6 +26,8 @@ public class GameEngine
 
     public final int WORLD_WIDTH = 100;
     public final int WORLD_HEIGHT = 100;
+    
+    public static final int TILE_SIZE = 64;
 
     final float PLAYER_START_X = 500f;
     final float PLAYER_START_Y = 500f;
@@ -54,12 +56,10 @@ public class GameEngine
      */
     public void init(GameContainer gc) throws SlickException
     {
-        System.out.println("Generating ground");
-        genGround();
-        System.out.println("Ground gened");
+        genGround();        
         tank = new ObjectTank(PLAYER_START_X, PLAYER_START_Y, PLAYER_START_ANGLE);
         physics = new Physics();
-
+        System.out.println("Game Loaded...");
     }
 
     /**
@@ -93,7 +93,7 @@ public class GameEngine
         //draws every object
         ObjectBoilerplate object;
 
-        ObjectBoilerplate grnd;
+        ObjectGroundBoilerplate grnd;
         for (int x = 0; x < WORLD_WIDTH; x++)
         {
             for (int y = 0; y < WORLD_HEIGHT; y++)
@@ -101,6 +101,7 @@ public class GameEngine
                 if ((grnd = tileArray[x][y]) != null)
                 {
                     grnd.render(renderOffsetX, renderOffsetY);
+                    grnd.renderBB(g, renderOffsetX, renderOffsetY);
                 }
             }
         }
@@ -117,7 +118,7 @@ public class GameEngine
             {
                 if (x == 0 || x == WORLD_WIDTH - 1 || y == 0 || y == WORLD_HEIGHT - 1)
                 {
-
+                    tileArray[x][y] = new ObjectGroundBarrier(x, y);
                 }
                 else
                 {

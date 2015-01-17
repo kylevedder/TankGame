@@ -21,7 +21,7 @@ import org.newdawn.slick.geom.Transform;
  *
  * @author Kyle
  */
-public class ObjectTank extends ObjectBoilerplate
+public class ObjectTank extends ObjectEntityBoilerplate
 {
 
     private float speed = 0f;
@@ -76,12 +76,19 @@ public class ObjectTank extends ObjectBoilerplate
         {
             driveAnimation.update(delta);
         }
-        CenteredRectangle newRect = this.rect;
-        newRect.setCenterX(newRect.getCenterX() + driveForwardX(speed, angle));
-        newRect.setCenterY(newRect.getCenterY() + driveForwardY(speed, angle));
-        newRect.setAngle(angle);
-        if(!MainApp.gameEngine.physics.isColliding(newRect))
-            this.rect = newRect;
+        float oldX = this.rect.getCenterX();
+        float oldY = this.rect.getCenterY();
+        float oldAngle = this.rect.getAngle();
+        this.rect.setCenterX(this.rect.getCenterX() + driveForwardX(speed, angle));
+        this.rect.setCenterY(this.rect.getCenterY() + driveForwardY(speed, angle));
+        this.rect.setAngle(angle);
+//        System.out.println("Colliding: " + MainApp.gameEngine.physics.isColliding(newRect));
+        if (MainApp.gameEngine.physics.isColliding(this.rect))
+        {
+            this.rect.setCenterX(oldX);
+            this.rect.setCenterY(oldY);
+            this.rect.setAngle(angle);
+        }
     }
 
     @Override
@@ -106,7 +113,13 @@ public class ObjectTank extends ObjectBoilerplate
         g.setColor(Color.green);
         //draw shape
         Shape s = this.rect.getPolygon();
-        g.draw(s.transform(Transform.createTranslateTransform(-renderOffsetX, -renderOffsetY)));                       
+        g.draw(s.transform(Transform.createTranslateTransform(-renderOffsetX, -renderOffsetY)));
+    }
+    
+    @Override
+    void renderBB(Graphics g, float renderOffsetX, float renderOffsetY)
+    {
+        renderBoundingBox(g, renderOffsetX, renderOffsetY);
     }
 
     /**
@@ -146,9 +159,9 @@ public class ObjectTank extends ObjectBoilerplate
             if (input.isKeyDown(Input.KEY_LSHIFT))
             {
                 tankSpeed *= this.getDriveSpeedMultiplier();
-                duration = (int)((float)ANIMATION_DURATION / (this.getDriveSpeedMultiplier()));
-            }            
-                 
+                duration = (int) ((float) ANIMATION_DURATION / (this.getDriveSpeedMultiplier()));
+            }
+
             this.driveAnimation.setDuration(duration);
             this.speed = tankSpeed;
             this.angle = wrapAngle(angle, tankAngleAppend);
@@ -216,6 +229,6 @@ public class ObjectTank extends ObjectBoilerplate
     public float getDriveSpeedMultiplier()
     {
         return DRIVE_SPEED_MULTIPLIER;
-    }
+    }    
 
 }

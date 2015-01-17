@@ -5,6 +5,9 @@
  */
 package kylevedder.com.github.main;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+
 
 /**
  *
@@ -18,4 +21,6 @@ public abstract class ObjectGroundBoilerplate extends ObjectBoilerplate
     {
         return canCollide;
     }
+    
+    abstract void renderBB(Graphics g, float renderOffsetX, float renderOffsetY);    
 }

@@ -9,6 +9,8 @@ import kylevedder.com.github.utils.CenteredRectangle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kylevedder.com.github.utils.Utils;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -29,11 +31,13 @@ public class ObjectGroundDefault extends ObjectGroundBoilerplate
     public ObjectGroundDefault(int x, int y)
     {
         this.image = null;
+        this.canCollide = false;
         try
         {
             this.image = new Image("images/Ground.png");
             width = this.image.getWidth();
             height = this.image.getHeight();
+            this.scale = GameEngine.TILE_SIZE / width;
         }
         catch (SlickException ex)
         {
@@ -51,7 +55,16 @@ public class ObjectGroundDefault extends ObjectGroundBoilerplate
     @Override
     void render(float renderOffsetX, float renderOffsetY)
     {
-        if(Utils.isVisible(rect, image, scale, renderOffsetX, renderOffsetY))
-        image.draw(rect.getCornerX() - renderOffsetX, rect.getCornerY() - rect.getHeight() - renderOffsetY, scale);
+        if (Utils.isVisible(rect, image, scale, renderOffsetX, renderOffsetY))
+        {
+            image.draw(rect.getCornerX() - renderOffsetX, rect.getCornerY() - renderOffsetY, scale);
+        }
+    }
+
+    @Override
+    void renderBB(Graphics g, float renderOffsetX, float renderOffsetY)
+    {
+        g.setColor(Color.white);        
+        g.drawRect(rect.getCornerX() - renderOffsetX, rect.getCornerY() - renderOffsetY, rect.getWidth(), rect.getHeight());
     }
 }

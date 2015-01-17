@@ -49,22 +49,28 @@ public class Physics
         }
         
         //get Xs and Ys to check
-        int midX = (int) ((c.getCenterX() - (c.getCenterX() % c.getWidth())) / c.getWidth());
-        int midY = (int) ((c.getCenterY() - (c.getCenterY() % c.getHeight())) / c.getHeight());
+        int midX = (int) ((c.getCenterX() - (c.getCenterX() % GameEngine.TILE_SIZE)) / GameEngine.TILE_SIZE);
+        int midY = (int) ((c.getCenterY() - (c.getCenterY() % GameEngine.TILE_SIZE)) / GameEngine.TILE_SIZE);
         int maxX = Utils.clampInt(midX + CHECK_AREA, 0, MainApp.gameEngine.WORLD_WIDTH);
         int minX = Utils.clampInt(midX - CHECK_AREA, 0, MainApp.gameEngine.WORLD_WIDTH);
         int maxY = Utils.clampInt(midY + CHECK_AREA, 0, MainApp.gameEngine.WORLD_WIDTH);
         int minY = Utils.clampInt(midY - CHECK_AREA, 0, MainApp.gameEngine.WORLD_WIDTH);
 
+        System.out.println("Min: (" + minX + "," + minY + ") Max: (" + maxX + "," + maxY + ")");
         //check for each collision
         for (int x = minX; x <= maxX; x++)
         {
             for (int y = minY; y <= maxY; y++)
             {
-                if(MainApp.gameEngine.tileArray[x][y].rect.collides(c)) return true;
+                if(MainApp.gameEngine.tileArray[x][y].canCollide() && MainApp.gameEngine.tileArray[x][y].rect.collides(c)) return true;
             }
         }
         return false;
+    }
+    
+    public static void CenteredRectangleSet()
+    {
+        
     }
 
 }
