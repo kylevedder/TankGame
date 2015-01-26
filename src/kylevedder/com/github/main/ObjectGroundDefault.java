@@ -5,16 +5,14 @@
  */
 package kylevedder.com.github.main;
 
-import kylevedder.com.github.utils.CenteredRectangleOld;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import kylevedder.com.github.physics.CenteredRectangle;
 import kylevedder.com.github.utils.Utils;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.geom.Rectangle;
 
 /**
  *
@@ -43,7 +41,7 @@ public class ObjectGroundDefault extends ObjectGroundBoilerplate
         {
             Logger.getLogger(ObjectGroundDefault.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.rect = new CenteredRectangleOld(x * width * scale, y * height * scale, width * scale, height * scale);
+        this.rect = new CenteredRectangle(x * width * scale, y * height * scale, width * scale, height * scale, 0);
     }
 
     @Override
@@ -57,7 +55,7 @@ public class ObjectGroundDefault extends ObjectGroundBoilerplate
     {
         if (Utils.isVisible(rect, image, scale, renderOffsetX, renderOffsetY))
         {
-            image.draw(rect.getCornerX() - renderOffsetX, rect.getCornerY() - renderOffsetY, scale);
+            image.draw(rect.getMinX() - renderOffsetX, rect.getMinY() - renderOffsetY, scale);
         }
     }
 
@@ -65,6 +63,6 @@ public class ObjectGroundDefault extends ObjectGroundBoilerplate
     void renderBB(Graphics g, float renderOffsetX, float renderOffsetY)
     {
         g.setColor(Color.white);        
-        g.drawRect(rect.getCornerX() - renderOffsetX, rect.getCornerY() - renderOffsetY, rect.getWidth(), rect.getHeight());
+        g.drawRect(rect.getMinX() - renderOffsetX, rect.getMinY() - renderOffsetY, rect.getWidth(), rect.getHeight());
     }
 }

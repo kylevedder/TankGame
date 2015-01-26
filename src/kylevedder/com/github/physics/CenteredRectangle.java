@@ -24,11 +24,15 @@ public class CenteredRectangle
     private Polygon p;
     private float centerX;
     private float centerY;
+    private float width;
+    private float height;
 
     public CenteredRectangle(CenteredRectangle cr)
     {
         this.centerX = cr.centerX;
         this.centerY = cr.centerY;
+        this.width = cr.width;
+        this.height = cr.height;
         this.angle = cr.getAngle();                        
         p = cr.p;
     }
@@ -38,6 +42,8 @@ public class CenteredRectangle
         this.centerX = centerX;
         this.centerY = centerY;
         this.angle = rotation;
+        this.width = width;
+        this.height = height;
         //centers rectangle
         Rectangle r = new Rectangle(centerX - width / 2, centerY - height / 2, width, height);
         //angles rectangle
@@ -156,6 +162,27 @@ public class CenteredRectangle
     {
         return angle;
     }
+
+    /**
+     * Gets the rectangle width
+     * @return 
+     */
+    public float getWidth()
+    {
+        return width;
+    }
+
+    /**
+     * Gets the rectangle height
+     * @return 
+     */
+    public float getHeight()
+    {
+        return height;
+    }
+    
+    
+    
 
     
     /**

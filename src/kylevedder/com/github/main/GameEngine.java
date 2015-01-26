@@ -41,9 +41,8 @@ public class GameEngine
     private float tankSpeed = 0;
 
     ObjectTank tank = null;
-    Physics physics = null;
     
-    public static ObjectRegister register = null;    
+    public ObjectRegister register = null;    
     
     public ObjectGroundBoilerplate[][] tileArray = null;
 
@@ -63,7 +62,6 @@ public class GameEngine
     {
         genGround();        
         tank = new ObjectTank(PLAYER_START_X, PLAYER_START_Y, PLAYER_START_ANGLE);
-        physics = new Physics();
         System.out.println("Game Loaded...");
     }
 

@@ -6,7 +6,7 @@
 
 package kylevedder.com.github.main;
 
-import kylevedder.com.github.utils.CenteredRectangleOld;
+import kylevedder.com.github.physics.CenteredRectangle;
 import org.newdawn.slick.Image;
 
 /**
@@ -17,7 +17,7 @@ public abstract class ObjectBoilerplate
 {
 
     protected Image image = null;
-    protected CenteredRectangleOld rect = null;
+    protected CenteredRectangle rect = null;
     
     abstract void update(long delta);
     abstract void render(float renderOffsetX, float renderOffsetY);
@@ -31,7 +31,7 @@ public abstract class ObjectBoilerplate
         return image;
     }
     
-    public CenteredRectangleOld getRectangle()
+    public CenteredRectangle getRectangle()
     {
         return rect;
     }        

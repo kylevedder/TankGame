@@ -5,9 +5,11 @@
  */
 package kylevedder.com.github.main;
 
-import kylevedder.com.github.utils.CenteredRectangleOld;
 import java.util.Random;
 import kylevedder.com.github.animation.CustomAnimation;
+import kylevedder.com.github.physics.CenteredRectangle;
+import kylevedder.com.github.physics.PhysicsObject;
+import kylevedder.com.github.physics.Vector;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -23,28 +25,29 @@ import org.newdawn.slick.geom.Transform;
  */
 public class ObjectTank extends ObjectEntityBoilerplate
 {
-
-    private float speed = 0f;
-    private float angle = 0f;
+    
 
     private CustomAnimation driveAnimation = null;
+    
+    private CenteredRectangle hitBox = null;
+    private Vector vector = null;
 
     private final float SCALE = 2;
     private final int TILE_WIDTH = 25;
     private final int TILE_HEIGHT = 30;
     private final int ANIMATION_DURATION = 100;
     private final float TURN_RATE = 2f;
-    private final float DRIVE_SPEED = 1.5f;
+    private final float DRIVE_SPEED = 15f;
     private final float DRIVE_SPEED_MULTIPLIER = 2f;
 
     private Random r = null;
 
     public ObjectTank(float posX, float posY, float angle)
     {
+        this.vector = new Vector(0, angle);
+        this.hitBox = new CenteredRectangle(posX, posY, TILE_WIDTH, TILE_HEIGHT, angle);
         r = new Random(System.currentTimeMillis());
-        rect = new CenteredRectangleOld(posX, posY, TILE_WIDTH * SCALE, TILE_HEIGHT * SCALE);
-        this.angle = angle;
-        this.speed = 0f;
+        rect = new CenteredRectangle(posX, posY, TILE_WIDTH * SCALE, TILE_HEIGHT * SCALE, 0);
         SpriteSheet sheet = null;
         try
         {
@@ -67,8 +70,8 @@ public class ObjectTank extends ObjectEntityBoilerplate
 
     public void update(long delta, Input input)
     {
-        updateDrive(input);
-        if (speed == 0)
+        updateVector(input);
+        if (this.vector.getSpeed() == 0)
         {
             driveAnimation.freeze(delta);
         }
@@ -76,28 +79,35 @@ public class ObjectTank extends ObjectEntityBoilerplate
         {
             driveAnimation.update(delta);
         }
-        float oldX = this.rect.getCenterX();
-        float oldY = this.rect.getCenterY();
-        float oldAngle = this.rect.getAngle();
-        this.rect.setCenterX(this.rect.getCenterX() + driveForwardX(speed, angle));
-        this.rect.setCenterY(this.rect.getCenterY() + driveForwardY(speed, angle));
-        this.rect.setAngle(angle);
-//        System.out.println("Colliding: " + MainApp.gameEngine.physics.isColliding(newRect));
-        if (MainApp.gameEngine.physics.isColliding(this.rect))
-        {
-            this.rect.setCenterX(oldX);
-            this.rect.setCenterY(oldY);
-            this.rect.setAngle(angle);
-        }
+        
+        Object[] objects = MainApp.gameEngine.register.updateCollision(this.hitBox, vector, MainApp.NUM_COLLISION_UPDATES, (int)delta);
+        this.hitBox = (CenteredRectangle) objects[0];
+        this.vector = (Vector) objects[1];        
+        System.out.println(this.vector);
+        
+//        float oldX = this.rect.getCenterX();
+//        float oldY = this.rect.getCenterY();
+//        float oldAngle = this.rect.getAngle();
+////        this.rect.setCenterX(this.rect.getCenterX() + driveForwardX(speed, angle));
+////        this.rect.setCenterY(this.rect.getCenterY() + driveForwardY(speed, angle));
+////        this.rect.setAngle(angle);
+//        this.rect.
+////        System.out.println("Colliding: " + MainApp.gameEngine.physics.isColliding(newRect));
+//        if (MainApp.gameEngine.physics.isColliding(this.rect))
+//        {
+//            this.rect.setCenterX(oldX);
+//            this.rect.setCenterY(oldY);
+//            this.rect.setAngle(angle);
+//        }
     }
 
     @Override
     void render(float renderOffsetX, float renderOffsetY)
     {
         //gets the correct frame, reverses playback accordingly
-        Image image = driveAnimation.getFrame(this.speed < 0);
+        Image image = driveAnimation.getFrame(this.vector.getSpeed() < 0);
         image.setCenterOfRotation((((float) image.getWidth()) * SCALE / 2), (((float) image.getHeight()) * SCALE / 2));
-        image.setRotation(angle);
+        image.setRotation(vector.getAngle() + 90);
         image.draw(this.rect.getCenterX() - renderOffsetX - (image.getWidth() * SCALE / 2), this.rect.getCenterY() - renderOffsetY - (image.getHeight() * SCALE / 2), SCALE);
     }
 
@@ -114,6 +124,11 @@ public class ObjectTank extends ObjectEntityBoilerplate
         //draw shape
         Shape s = this.rect.getPolygon();
         g.draw(s.transform(Transform.createTranslateTransform(-renderOffsetX, -renderOffsetY)));
+        
+        g.setColor(Color.red);
+        g.drawLine(this.hitBox.getCenterX() - renderOffsetX, this.hitBox.getCenterY() - renderOffsetY, this.hitBox.getCenterX() + vector.getXComp() - renderOffsetX, this.hitBox.getCenterY() + vector.getYComp() - renderOffsetY);
+        g.setColor(Color.red);
+        g.drawLine(this.hitBox.getCenterX() - renderOffsetX, this.hitBox.getCenterY() - renderOffsetY, this.hitBox.getCenterX() + 20*(float)Math.cos(Math.toRadians(vector.getAngle())) - renderOffsetX, this.hitBox.getCenterY() + 20*(float)Math.sin(Math.toRadians(vector.getAngle())) - renderOffsetY);
     }
     
     @Override
@@ -123,11 +138,10 @@ public class ObjectTank extends ObjectEntityBoilerplate
     }
 
     /**
-     * Takes input from the user and
-     *
-     * @param gc
+     * Updates the tank's vector based on User Input
+     * @param input 
      */
-    private void updateDrive(Input input)
+    private void updateVector(Input input)
     {
         if (input != null)
         {
@@ -163,8 +177,8 @@ public class ObjectTank extends ObjectEntityBoilerplate
             }
 
             this.driveAnimation.setDuration(duration);
-            this.speed = tankSpeed;
-            this.angle = wrapAngle(angle, tankAngleAppend);
+            this.vector.setSpeed(tankSpeed);
+            this.vector.setAngle(wrapAngle(this.vector.getAngle(), tankAngleAppend));
         }
     }
 

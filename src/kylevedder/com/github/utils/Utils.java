@@ -8,6 +8,7 @@ package kylevedder.com.github.utils;
 import kylevedder.com.github.main.GameEngine;
 import kylevedder.com.github.main.MainApp;
 import kylevedder.com.github.main.ObjectBoilerplate;
+import kylevedder.com.github.physics.CenteredRectangle;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Point;
@@ -118,12 +119,12 @@ public class Utils
      * @param renderOffsetY renderer offset of the item in the Y
      * @return
      */
-    public static boolean isVisible(CenteredRectangleOld rect, Image image, float scale, float renderOffsetX, float renderOffsetY)
+    public static boolean isVisible(CenteredRectangle rect, Image image, float scale, float renderOffsetX, float renderOffsetY)
     {
         return //within screen X
-                rect.getCornerX() - renderOffsetX + image.getWidth() * scale > 0 && rect.getCornerX() - renderOffsetX < MainApp.SCREEN_WIDTH
+                rect.getMinX() - renderOffsetX + image.getWidth() * scale > 0 && rect.getMinX() - renderOffsetX < MainApp.SCREEN_WIDTH
                 && //within screen Y
-                rect.getCornerY() - renderOffsetY + image.getHeight() * scale > 0 && rect.getCornerY() - renderOffsetY < MainApp.SCREEN_WIDTH;
+                rect.getMinY() - renderOffsetY + image.getHeight() * scale > 0 && rect.getMinY() - renderOffsetY < MainApp.SCREEN_WIDTH;
     }
 
     public static int convertObjectToGroundTileX(ObjectBoilerplate o)

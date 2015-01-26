@@ -7,7 +7,7 @@ package kylevedder.com.github.main;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import kylevedder.com.github.utils.CenteredRectangleOld;
+import kylevedder.com.github.physics.CenteredRectangle;
 import kylevedder.com.github.utils.Utils;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -41,7 +41,7 @@ public class ObjectGroundBarrier extends ObjectGroundBoilerplate
         {
             Logger.getLogger(ObjectGroundDefault.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.rect = new CenteredRectangleOld(x * width * scale, y * height * scale, width * scale, height * scale);
+        this.rect = new CenteredRectangle(x * width * scale, y * height * scale, width * scale, height * scale, 0);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class ObjectGroundBarrier extends ObjectGroundBoilerplate
     void render(float renderOffsetX, float renderOffsetY)
     {
         if(Utils.isVisible(rect, image, scale, renderOffsetX, renderOffsetY))
-        image.draw(rect.getCornerX() - renderOffsetX, rect.getCornerY() - renderOffsetY, scale);
+        image.draw(rect.getMinX() - renderOffsetX, rect.getMinY() - renderOffsetY, scale);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class ObjectGroundBarrier extends ObjectGroundBoilerplate
     {
         g.setColor(Color.red);        
 //        g.drawString((this.getRectangle().getCornerX() / 32) + "," + (this.getRectangle().getCornerY() / 32), (this.getRectangle().getCornerX()) - renderOffsetX, (this.getRectangle().getCornerY()) - renderOffsetY);
-        g.drawRect(rect.getCornerX() - renderOffsetX, rect.getCornerY() - renderOffsetY, rect.getWidth(), rect.getHeight());
+        g.drawRect(rect.getMinX() - renderOffsetX, rect.getMinY() - renderOffsetY, rect.getWidth(), rect.getHeight());
     }
     
     
