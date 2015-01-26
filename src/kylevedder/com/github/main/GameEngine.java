@@ -8,6 +8,7 @@ package kylevedder.com.github.main;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import kylevedder.com.github.physics.ObjectRegister;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -41,11 +42,15 @@ public class GameEngine
 
     ObjectTank tank = null;
     Physics physics = null;
+    
+    public static ObjectRegister register = null;    
+    
     public ObjectGroundBoilerplate[][] tileArray = null;
 
     public GameEngine()
     {
         tileArray = new ObjectGroundBoilerplate[WORLD_WIDTH][WORLD_HEIGHT];
+        register = new ObjectRegister();
     }
 
     /**

@@ -9,6 +9,8 @@ import kylevedder.com.github.main.GameEngine;
 import kylevedder.com.github.main.MainApp;
 import kylevedder.com.github.main.ObjectBoilerplate;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Line;
+import org.newdawn.slick.geom.Point;
 
 /**
  *
@@ -79,6 +81,34 @@ public class Utils
     }
 
     /**
+     * Translates an array of x,y floats into an array of points.
+     *
+     * @param pointValsArray
+     * @return
+     */
+    public static Point[] getPoints(float[] pointValsArray)
+    {
+        Point[] points = new Point[pointValsArray.length / 2];
+        for (int i = 0; i < pointValsArray.length / 2; i++)
+        {
+            points[i] = new Point(pointValsArray[2 * i], pointValsArray[2 * i + 1]);
+        }
+        return points;
+    }
+
+    /**
+     * Translates two Points into a Line
+     *
+     * @param p1
+     * @param p2
+     * @return
+     */
+    public static Line getLine(Point p1, Point p2)
+    {
+        return new Line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+    }
+
+    /**
      * Useful utility to check if an item needs to be rendered.
      *
      * @param rect rectangle of the item
@@ -88,7 +118,7 @@ public class Utils
      * @param renderOffsetY renderer offset of the item in the Y
      * @return
      */
-    public static boolean isVisible(CenteredRectangle rect, Image image, float scale, float renderOffsetX, float renderOffsetY)
+    public static boolean isVisible(CenteredRectangleOld rect, Image image, float scale, float renderOffsetX, float renderOffsetY)
     {
         return //within screen X
                 rect.getCornerX() - renderOffsetX + image.getWidth() * scale > 0 && rect.getCornerX() - renderOffsetX < MainApp.SCREEN_WIDTH
@@ -100,7 +130,7 @@ public class Utils
     {
         return (int) o.getRectangle().getCenterX() / GameEngine.TILE_SIZE;
     }
-    
+
     public static int convertObjectToGroundTileY(ObjectBoilerplate o)
     {
         return (int) o.getRectangle().getCenterY() / GameEngine.TILE_SIZE;

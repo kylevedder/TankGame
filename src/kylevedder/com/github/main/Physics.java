@@ -6,7 +6,7 @@
 package kylevedder.com.github.main;
 
 import java.util.ArrayList;
-import kylevedder.com.github.utils.CenteredRectangle;
+import kylevedder.com.github.utils.CenteredRectangleOld;
 import kylevedder.com.github.utils.Utils;
 
 /**
@@ -37,10 +37,10 @@ public class Physics
     /**
      * Checks for ground collisions and entity collisions
      *
-     * @param c CenteredRectangle of the BB of the checker
+     * @param c CenteredRectangleOld of the BB of the checker
      * @return if isColliding
      */
-    public boolean isColliding(CenteredRectangle c)
+    public boolean isColliding(CenteredRectangleOld c)
     {
         //check for collide with other entities
         for (ObjectBoilerplate entity : entities)

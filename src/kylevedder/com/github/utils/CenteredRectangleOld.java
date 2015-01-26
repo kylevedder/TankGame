@@ -14,7 +14,7 @@ import org.newdawn.slick.geom.Transform;
  *
  * @author Kyle
  */
-public class CenteredRectangle
+public class CenteredRectangleOld
 {
 
 //    private Rectangle r = null;
@@ -25,7 +25,7 @@ public class CenteredRectangle
     private float width = 0;
     private float height = 0;
 
-//    public CenteredRectangle(CenteredRectangle c)
+//    public CenteredRectangleOld(CenteredRectangleOld c)
 //    {
 //        this.r = new Rectangle(c.getCornerX(), c.getCornerY(), c.getWidth(), c.getHeight());
 //        poly = new Polygon(new float[]
@@ -38,7 +38,7 @@ public class CenteredRectangle
 //        this.setAngle(c.angle);
 //    }
     
-    public CenteredRectangle(float posX, float posY, float size)
+    public CenteredRectangleOld(float posX, float posY, float size)
     {
         angle = 0;
         width = height = size;
@@ -52,7 +52,7 @@ public class CenteredRectangle
         });
     }
 
-    public CenteredRectangle(float posX, float posY, float width, float height)
+    public CenteredRectangleOld(float posX, float posY, float width, float height)
     {
         angle = 0;
         this.width = width;
@@ -153,7 +153,7 @@ public class CenteredRectangle
         return poly.intersects(s);
     }
 
-    public boolean collides(CenteredRectangle c)
+    public boolean collides(CenteredRectangleOld c)
     {
         return poly.intersects(c.getPolygon());
     }

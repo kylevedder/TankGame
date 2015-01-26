@@ -7,7 +7,7 @@ package kylevedder.com.github.main;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import kylevedder.com.github.utils.CenteredRectangle;
+import kylevedder.com.github.utils.CenteredRectangleOld;
 import kylevedder.com.github.utils.Utils;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -41,7 +41,7 @@ public class ObjectGroundBarrier extends ObjectGroundBoilerplate
         {
             Logger.getLogger(ObjectGroundDefault.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.rect = new CenteredRectangle(x * width * scale, y * height * scale, width * scale, height * scale);
+        this.rect = new CenteredRectangleOld(x * width * scale, y * height * scale, width * scale, height * scale);
     }
 
     @Override

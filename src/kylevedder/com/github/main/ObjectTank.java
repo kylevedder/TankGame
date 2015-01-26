@@ -5,7 +5,7 @@
  */
 package kylevedder.com.github.main;
 
-import kylevedder.com.github.utils.CenteredRectangle;
+import kylevedder.com.github.utils.CenteredRectangleOld;
 import java.util.Random;
 import kylevedder.com.github.animation.CustomAnimation;
 import org.newdawn.slick.Color;
@@ -42,7 +42,7 @@ public class ObjectTank extends ObjectEntityBoilerplate
     public ObjectTank(float posX, float posY, float angle)
     {
         r = new Random(System.currentTimeMillis());
-        rect = new CenteredRectangle(posX, posY, TILE_WIDTH * SCALE, TILE_HEIGHT * SCALE);
+        rect = new CenteredRectangleOld(posX, posY, TILE_WIDTH * SCALE, TILE_HEIGHT * SCALE);
         this.angle = angle;
         this.speed = 0f;
         SpriteSheet sheet = null;

@@ -5,7 +5,7 @@
  */
 package kylevedder.com.github.main;
 
-import kylevedder.com.github.utils.CenteredRectangle;
+import kylevedder.com.github.utils.CenteredRectangleOld;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kylevedder.com.github.utils.Utils;
@@ -43,7 +43,7 @@ public class ObjectGroundDefault extends ObjectGroundBoilerplate
         {
             Logger.getLogger(ObjectGroundDefault.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.rect = new CenteredRectangle(x * width * scale, y * height * scale, width * scale, height * scale);
+        this.rect = new CenteredRectangleOld(x * width * scale, y * height * scale, width * scale, height * scale);
     }
 
     @Override
