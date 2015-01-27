@@ -108,6 +108,20 @@ public class Utils
     {
         return new Line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
     }
+    
+    /**
+     * Takes the append angle value and appends it to the angle.
+     *
+     * Wraps to [0 - 360]
+     *
+     * @param angle
+     * @param appendValue
+     * @return
+     */
+    public static float wrapAngle(float angle, float appendValue)
+    {
+        return ((angle + appendValue) % 360f);
+    }
 
     /**
      * Useful utility to check if an item needs to be rendered.

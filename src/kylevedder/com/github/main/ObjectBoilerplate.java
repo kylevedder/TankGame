@@ -17,7 +17,7 @@ public abstract class ObjectBoilerplate
 {
 
     protected Image image = null;
-    protected CenteredRectangle rect = null;
+    protected CenteredRectangle hitBox = null;
     
     abstract void update(long delta);
     abstract void render(float renderOffsetX, float renderOffsetY);
@@ -33,6 +33,6 @@ public abstract class ObjectBoilerplate
     
     public CenteredRectangle getRectangle()
     {
-        return rect;
+        return hitBox;
     }        
 }

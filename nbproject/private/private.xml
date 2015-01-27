@@ -5,18 +5,21 @@
         <group>
             <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/ObjectEntityBoilerplate.java</file>
             <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/ObjectGroundBarrier.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/TankGame/lib/slick/src/org/newdawn/slick/Animation.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/Physics.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/TankGame/lib/slick/src/org/newdawn/slick/Graphics.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/ObjectTankNew.java</file>
             <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/ObjectGroundDefault.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/physics/PhysicsObject.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/physics/RigidBox.java</file>
             <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/MainApp.java</file>
             <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/utils/Utils.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/animation/CustomAnimation.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/physics/PhysicsBox.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/physics/ObjectRegister.java</file>
             <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/GameEngine.java</file>
             <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/ObjectTank.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/utils/CenteredRectangle.java</file>
             <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/ObjectGroundBoilerplate.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/physics/PhysicsBoxControlled.java</file>
             <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/main/ObjectBoilerplate.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/physics/CenteredRectangle.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/TankGame/src/kylevedder/com/github/physics/Vector.java</file>
         </group>
     </open-files>
 </project-private>

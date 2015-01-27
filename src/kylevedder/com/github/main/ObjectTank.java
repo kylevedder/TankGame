@@ -47,7 +47,7 @@ public class ObjectTank extends ObjectEntityBoilerplate
         this.vector = new Vector(0, angle);
         this.hitBox = new CenteredRectangle(posX, posY, TILE_WIDTH, TILE_HEIGHT, angle);
         r = new Random(System.currentTimeMillis());
-        rect = new CenteredRectangle(posX, posY, TILE_WIDTH * SCALE, TILE_HEIGHT * SCALE, 0);
+        hitBox = new CenteredRectangle(posX, posY, TILE_WIDTH * SCALE, TILE_HEIGHT * SCALE, 0);
         SpriteSheet sheet = null;
         try
         {
@@ -85,19 +85,19 @@ public class ObjectTank extends ObjectEntityBoilerplate
         this.vector = (Vector) objects[1];        
         System.out.println(this.vector);
         
-//        float oldX = this.rect.getCenterX();
-//        float oldY = this.rect.getCenterY();
-//        float oldAngle = this.rect.getAngle();
-////        this.rect.setCenterX(this.rect.getCenterX() + driveForwardX(speed, angle));
-////        this.rect.setCenterY(this.rect.getCenterY() + driveForwardY(speed, angle));
-////        this.rect.setAngle(angle);
-//        this.rect.
+//        float oldX = this.hitBox.getCenterX();
+//        float oldY = this.hitBox.getCenterY();
+//        float oldAngle = this.hitBox.getAngle();
+////        this.hitBox.setCenterX(this.hitBox.getCenterX() + driveForwardX(speed, angle));
+////        this.hitBox.setCenterY(this.hitBox.getCenterY() + driveForwardY(speed, angle));
+////        this.hitBox.setAngle(angle);
+//        this.hitBox.
 ////        System.out.println("Colliding: " + MainApp.gameEngine.physics.isColliding(newRect));
-//        if (MainApp.gameEngine.physics.isColliding(this.rect))
+//        if (MainApp.gameEngine.physics.isColliding(this.hitBox))
 //        {
-//            this.rect.setCenterX(oldX);
-//            this.rect.setCenterY(oldY);
-//            this.rect.setAngle(angle);
+//            this.hitBox.setCenterX(oldX);
+//            this.hitBox.setCenterY(oldY);
+//            this.hitBox.setAngle(angle);
 //        }
     }
 
@@ -107,8 +107,8 @@ public class ObjectTank extends ObjectEntityBoilerplate
         //gets the correct frame, reverses playback accordingly
         Image image = driveAnimation.getFrame(this.vector.getSpeed() < 0);
         image.setCenterOfRotation((((float) image.getWidth()) * SCALE / 2), (((float) image.getHeight()) * SCALE / 2));
-        image.setRotation(vector.getAngle() + 90);
-        image.draw(this.rect.getCenterX() - renderOffsetX - (image.getWidth() * SCALE / 2), this.rect.getCenterY() - renderOffsetY - (image.getHeight() * SCALE / 2), SCALE);
+        image.setRotation(vector.getAngle());
+        image.draw(this.hitBox.getCenterX() - renderOffsetX - (image.getWidth() * SCALE / 2), this.hitBox.getCenterY() - renderOffsetY - (image.getHeight() * SCALE / 2), SCALE);
     }
 
     public void renderBoundingBox(Graphics g, float renderOffsetX, float renderOffsetY)
@@ -118,11 +118,11 @@ public class ObjectTank extends ObjectEntityBoilerplate
         g.drawLine(0, 0, MainApp.SCREEN_WIDTH, MainApp.SCREEN_HEIGHT);
         g.drawLine(MainApp.SCREEN_WIDTH, 0, 0, MainApp.SCREEN_HEIGHT);
         //draw center circle        
-        g.drawOval(this.rect.getCenterX() - renderOffsetX - 16, this.rect.getCenterY() - renderOffsetY - 16, 32, 32);
+        g.drawOval(this.hitBox.getCenterX() - renderOffsetX - 16, this.hitBox.getCenterY() - renderOffsetY - 16, 32, 32);
 
         g.setColor(Color.green);
         //draw shape
-        Shape s = this.rect.getPolygon();
+        Shape s = this.hitBox.getPolygon();
         g.draw(s.transform(Transform.createTranslateTransform(-renderOffsetX, -renderOffsetY)));
         
         g.setColor(Color.red);
@@ -222,12 +222,12 @@ public class ObjectTank extends ObjectEntityBoilerplate
 
     public float getPosX()
     {
-        return this.rect.getCenterX();
+        return this.hitBox.getCenterX();
     }
 
     public float getPosY()
     {
-        return this.rect.getCenterY();
+        return this.hitBox.getCenterY();
     }
 
     public float getTurnRate()

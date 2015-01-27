@@ -41,7 +41,7 @@ public class ObjectGroundDefault extends ObjectGroundBoilerplate
         {
             Logger.getLogger(ObjectGroundDefault.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.rect = new CenteredRectangle(x * width * scale, y * height * scale, width * scale, height * scale, 0);
+        this.hitBox = new CenteredRectangle(x * width * scale, y * height * scale, width * scale, height * scale, 0);
     }
 
     @Override
@@ -53,9 +53,9 @@ public class ObjectGroundDefault extends ObjectGroundBoilerplate
     @Override
     void render(float renderOffsetX, float renderOffsetY)
     {
-        if (Utils.isVisible(rect, image, scale, renderOffsetX, renderOffsetY))
+        if (Utils.isVisible(hitBox, image, scale, renderOffsetX, renderOffsetY))
         {
-            image.draw(rect.getMinX() - renderOffsetX, rect.getMinY() - renderOffsetY, scale);
+            image.draw(hitBox.getMinX() - renderOffsetX, hitBox.getMinY() - renderOffsetY, scale);
         }
     }
 
@@ -63,6 +63,6 @@ public class ObjectGroundDefault extends ObjectGroundBoilerplate
     void renderBB(Graphics g, float renderOffsetX, float renderOffsetY)
     {
         g.setColor(Color.white);        
-        g.drawRect(rect.getMinX() - renderOffsetX, rect.getMinY() - renderOffsetY, rect.getWidth(), rect.getHeight());
+        g.drawRect(hitBox.getMinX() - renderOffsetX, hitBox.getMinY() - renderOffsetY, hitBox.getWidth(), hitBox.getHeight());
     }
 }

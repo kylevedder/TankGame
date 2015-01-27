@@ -18,7 +18,6 @@ import org.newdawn.slick.Graphics;
 public abstract class ObjectEntityBoilerplate extends ObjectBoilerplate
 {
     protected boolean canCollide = true;
-    protected CenteredRectangle hitBox = null;
     protected Vector vector = null;
     
     public boolean canCollide()

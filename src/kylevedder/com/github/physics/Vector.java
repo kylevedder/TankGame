@@ -69,7 +69,7 @@ public class Vector
      */
     public float getXComp()
     {
-        return this.speed * (float) Math.cos(Math.toRadians(angle));
+        return this.speed * (float) Math.sin(Math.toRadians(angle));
     }
 
     /**
@@ -79,7 +79,7 @@ public class Vector
      */
     public float getYComp()
     {
-        return this.speed * (float) Math.sin(Math.toRadians(angle));
+        return this.speed * (float) Math.cos(Math.toRadians(angle));
     }
 
     /**

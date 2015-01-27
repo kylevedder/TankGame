@@ -41,7 +41,7 @@ public class ObjectGroundBarrier extends ObjectGroundBoilerplate
         {
             Logger.getLogger(ObjectGroundDefault.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.rect = new CenteredRectangle(x * width * scale, y * height * scale, width * scale, height * scale, 0);
+        this.hitBox = new CenteredRectangle(x * width * scale, y * height * scale, width * scale, height * scale, 0);
     }
 
     @Override
@@ -53,8 +53,8 @@ public class ObjectGroundBarrier extends ObjectGroundBoilerplate
     @Override
     void render(float renderOffsetX, float renderOffsetY)
     {
-        if(Utils.isVisible(rect, image, scale, renderOffsetX, renderOffsetY))
-        image.draw(rect.getMinX() - renderOffsetX, rect.getMinY() - renderOffsetY, scale);
+        if(Utils.isVisible(hitBox, image, scale, renderOffsetX, renderOffsetY))
+        image.draw(hitBox.getMinX() - renderOffsetX, hitBox.getMinY() - renderOffsetY, scale);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class ObjectGroundBarrier extends ObjectGroundBoilerplate
     {
         g.setColor(Color.red);        
 //        g.drawString((this.getRectangle().getCornerX() / 32) + "," + (this.getRectangle().getCornerY() / 32), (this.getRectangle().getCornerX()) - renderOffsetX, (this.getRectangle().getCornerY()) - renderOffsetY);
-        g.drawRect(rect.getMinX() - renderOffsetX, rect.getMinY() - renderOffsetY, rect.getWidth(), rect.getHeight());
+        g.drawRect(hitBox.getMinX() - renderOffsetX, hitBox.getMinY() - renderOffsetY, hitBox.getWidth(), hitBox.getHeight());
     }
     
     

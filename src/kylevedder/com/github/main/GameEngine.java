@@ -32,7 +32,7 @@ public class GameEngine
 
     final float PLAYER_START_X = 500f;
     final float PLAYER_START_Y = 500f;
-    final float PLAYER_START_ANGLE = 45f;
+    final float PLAYER_START_ANGLE = 0f;
 
     public float renderOffsetX = PLAYER_START_X;
     public float renderOffsetY = PLAYER_START_Y;
@@ -40,7 +40,7 @@ public class GameEngine
     private float tankAngleAppend = 0;
     private float tankSpeed = 0;
 
-    ObjectTank tank = null;
+    ObjectTankNew tank = null;
     
     public ObjectRegister register = null;    
     
@@ -61,7 +61,7 @@ public class GameEngine
     public void init(GameContainer gc) throws SlickException
     {
         genGround();        
-        tank = new ObjectTank(PLAYER_START_X, PLAYER_START_Y, PLAYER_START_ANGLE);
+        tank = new ObjectTankNew(PLAYER_START_X, PLAYER_START_Y, PLAYER_START_ANGLE);
         System.out.println("Game Loaded...");
     }
 
@@ -75,8 +75,8 @@ public class GameEngine
     public void update(GameContainer gc, int deltaTime) throws SlickException
     {
         tank.update(deltaTime, gc.getInput());
-        renderOffsetX = tank.getPosX() - (MainApp.SCREEN_WIDTH / 2);
-        renderOffsetY = tank.getPosY() - (MainApp.SCREEN_HEIGHT / 2);
+        renderOffsetX = tank.getX() - (MainApp.SCREEN_WIDTH / 2);
+        renderOffsetY = tank.getY() - (MainApp.SCREEN_HEIGHT / 2);
     }
 
     /**
@@ -109,7 +109,7 @@ public class GameEngine
             }
         }
         tank.render(renderOffsetX, renderOffsetY);
-        tank.renderBoundingBox(g, renderOffsetX, renderOffsetY);
+        tank.renderBB(g, renderOffsetX, renderOffsetY);
 
     }
 
